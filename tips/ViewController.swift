@@ -40,30 +40,14 @@ class ViewController: UIViewController {
     var currencySymbolTable: [String:String] = [:]
     
     func getCurrencySymbol(code: String!) -> String {
-        return "$" // TODO implement
-//        if code == nil {
-//            return "$"
-//        }
-//        
-//        if currencySymbolTable.isEmpty {
-//            // populate currency symbol table
-//            let identifiers = NSLocale.availableLocaleIdentifiers()
-//            for id in identifiers {
-//                // println("Identifier: " + (id as String))
-//                let locale = NSLocale.localeWithLocaleIdentifier(id as String)
-//                let currencyCode = locale.displayNameForKey(NSLocaleCurrencyCode, value: id as String)
-//                let currencySymbol = locale.displayNameForKey(NSLocaleCurrencySymbol, value: id as String)
-//                if currencyCode != nil {
-//                    currencySymbolTable[currencyCode] = currencySymbol
-//                }
-//            }
-//        }
-//        
-//        if currencySymbolTable[code] == nil {
-//            return "$"
-//        }
-//        
-//        return currencySymbolTable[code]!
+        let locale = NSLocale(localeIdentifier: code)
+        let currencySymbol = locale.displayNameForKey(NSLocaleCurrencySymbol, value: code)
+        
+        if currencySymbol == nil {
+            return "$"
+        }
+        
+        return currencySymbol
     }
     
     override func viewDidLoad() {
@@ -73,11 +57,6 @@ class ViewController: UIViewController {
         currencyFormatter.numberStyle = NSNumberFormatterStyle.DecimalStyle
         currencyFormatter.minimumFractionDigits = 2
         currencyFormatter.maximumFractionDigits = 2
-        // currencyFormatter.locale = currentLocale
-        
-        
-        // tipLabel.text = currencyFormatter.stringFromNumber(0.00)
-        // totalLabel.text = currencyFormatter.stringFromNumber(0.00)
         
         if billField.text.isEmpty {
             showDisplayView = false
@@ -110,6 +89,7 @@ class ViewController: UIViewController {
         var defaults = NSUserDefaults.standardUserDefaults()
         
         currencySymbol = getCurrencySymbol(defaults.stringForKey("currency"))
+        billField.placeholder = currencySymbol
         
         darkModeEnabled = defaults.boolForKey(darkModeEnabledKey)
         
@@ -214,4 +194,3 @@ class ViewController: UIViewController {
         view.endEditing(true)
     }
 }
-
