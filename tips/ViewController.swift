@@ -27,19 +27,17 @@ class ViewController: UIViewController {
     
     // Copypasta (since class variables are apparently "not yet supported")
     let darkModeEnabledKey = "darkModeEnabledKey"
-    let decimalSeparatorKey = "decimalSeparatorKey"
-    let groupingSeparatorKey = "groupingSeparatorKey"
     
-    var decimalSeparator: String!
-    var groupingSeparator: String!
     var currencySymbol: String!
     var darkModeEnabled: Bool = false
-    
-    let separators = ["Comma":",", "Space":" ", "Period":"."]
     
     var currencySymbolTable: [String:String] = [:]
     
     func getCurrencySymbol(code: String!) -> String {
+        if code == nil {
+            return "$"
+        }
+        
         let locale = NSLocale(localeIdentifier: code)
         let currencySymbol = locale.displayNameForKey(NSLocaleCurrencySymbol, value: code)
         
@@ -47,7 +45,7 @@ class ViewController: UIViewController {
             return "$"
         }
         
-        return currencySymbol
+        return currencySymbol!
     }
     
     override func viewDidLoad() {
@@ -103,20 +101,21 @@ class ViewController: UIViewController {
             self.billField.backgroundColor = UIColor.whiteColor()
         }
         
-        decimalSeparator = defaults.stringForKey(decimalSeparatorKey)
-        groupingSeparator = defaults.stringForKey(groupingSeparatorKey)
-        
-        if decimalSeparator == nil {
-            decimalSeparator = "Period"
-        }
-        
-        if groupingSeparator == nil {
-            groupingSeparator = "Comma"
-        }
-        
         // Setup number formatter according to settings
-        currencyFormatter.groupingSeparator = separators[groupingSeparator]
-        currencyFormatter.decimalSeparator = separators[decimalSeparator]
+        // currencyFormatter.groupingSeparator = separators[groupingSeparator]
+        // currencyFormatter.decimalSeparator = separators[decimalSeparator]
+        
+        switch defaults.integerForKey("numberFormatKey") {
+        case 1:
+            currencyFormatter.groupingSeparator = " "
+            currencyFormatter.decimalSeparator = "."
+        case 2:
+            currencyFormatter.groupingSeparator = "."
+            currencyFormatter.decimalSeparator = ","
+        default:
+            currencyFormatter.groupingSeparator = ","
+            currencyFormatter.decimalSeparator = "."
+        }
         
         // Update total displays, if we're transitioning back from settings
         self.onEditingChanged(self)

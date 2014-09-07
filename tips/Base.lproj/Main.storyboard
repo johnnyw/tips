@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6205" systemVersion="14A314h" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="BEg-8d-yek">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6206.9" systemVersion="14A343f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="BEg-8d-yek">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6198"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7026.1"/>
     </dependencies>
     <scenes>
         <!--Just The Tip-->
@@ -25,7 +25,7 @@
                                     <action selector="onEditingChanged:" destination="vXZ-lx-hvc" eventType="valueChanged" id="qEZ-UL-tBV"/>
                                 </connections>
                             </segmentedControl>
-                            <textField clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="$" textAlignment="right" minimumFontSize="17" id="ja4-MT-yPk">
+                            <textField clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="$" textAlignment="right" minimumFontSize="17" id="ja4-MT-yPk" customClass="DarkPlaceholderBackgroundTextField" customModule="tips" customModuleProvider="target">
                                 <rect key="frame" x="16" y="109" width="288" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -178,43 +178,18 @@
                                     <segue destination="LJY-hK-TXZ" kind="push" id="O8F-HN-yog"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Decimal separator" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="N9D-1Z-ZRh">
-                                <rect key="frame" x="16" y="249" width="140" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Number format" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="N9D-1Z-ZRh">
+                                <rect key="frame" x="16" y="249" width="117" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="H5w-SM-IOd">
-                                <rect key="frame" x="16" y="278" width="288" height="29"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="OCK-T8-sNa">
+                                <rect key="frame" x="0.0" y="278" width="320" height="290"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <segments>
-                                    <segment title="Period"/>
-                                    <segment title="Comma"/>
-                                </segments>
-                                <connections>
-                                    <action selector="decimalSeparatorChanged:" destination="nuB-mH-xZo" eventType="valueChanged" id="NvN-e2-71r"/>
-                                </connections>
-                            </segmentedControl>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Grouping separator" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ici-9V-2hk">
-                                <rect key="frame" x="16" y="330" width="149" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="MvD-l4-fyX">
-                                <rect key="frame" x="16" y="359" width="285" height="29"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <segments>
-                                    <segment title="Comma"/>
-                                    <segment title="Period"/>
-                                    <segment title="Space"/>
-                                </segments>
-                                <connections>
-                                    <action selector="groupingSeparatorChanged:" destination="nuB-mH-xZo" eventType="valueChanged" id="UtM-BY-ugk"/>
-                                </connections>
-                            </segmentedControl>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -223,8 +198,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="darkModeSwitch" destination="Hgx-fK-DMa" id="Vuw-Or-t6d"/>
-                        <outlet property="decimalSeparatorControl" destination="H5w-SM-IOd" id="3hy-8n-g8f"/>
-                        <outlet property="groupingSeparatorControl" destination="MvD-l4-fyX" id="uru-JE-U6X"/>
+                        <outlet property="numberFormatTable" destination="OCK-T8-sNa" id="tcr-WW-6Xr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="evW-vC-4Pw" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -240,7 +214,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="WNm-2m-eWC">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CurrencyCell" id="WNm-2m-eWC">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="WNm-2m-eWC" id="WkM-S6-wsh">
                                     <autoresizingMask key="autoresizingMask"/>

@@ -8,32 +8,38 @@
 
 import UIKit
 
-class SettingsViewController: UIViewController {
-
-    enum DecimalSeparators: String {
-        case Comma = "Comma"
-        case Period = "Period"
-    }
-    
-    enum GroupingSeparators: String {
-        case Comma = "Comma"
-        case Period = "Period"
-        case Space = "Space"
-    }
+class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     let darkModeEnabledKey = "darkModeEnabledKey"
-    let decimalSeparatorKey = "decimalSeparatorKey"
-    let groupingSeparatorKey = "groupingSeparatorKey"
+    let numberFormatKey = "numberFormatKey"
     
-    var decimalSeparator: String!
-    var groupingSeparator: String!
+    let reuseIdentifier = "NumberFormatCell"
     
-    let decimalSeparatorIndices = [DecimalSeparators.Period.toRaw():0, DecimalSeparators.Comma.toRaw():1]
-    let groupingSeparatorIndices = [GroupingSeparators.Comma.toRaw():0, GroupingSeparators.Period.toRaw():1, GroupingSeparators.Space.toRaw():2];
+    let numberFormats = ["1,000,000.00", "1 000 000.00", "1.000.000,00"]
     
     @IBOutlet weak var darkModeSwitch: UISwitch!
-    @IBOutlet weak var decimalSeparatorControl: UISegmentedControl!
-    @IBOutlet weak var groupingSeparatorControl: UISegmentedControl!
+    @IBOutlet weak var numberFormatTable: UITableView!
+    
+    // MARK: - table view data source
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return numberFormats.count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        var cell = tableView.dequeueReusableCellWithIdentifier(reuseIdentifier, forIndexPath: indexPath) as UITableViewCell
+        cell.textLabel!.text = numberFormats[indexPath.item]
+        return cell
+    }
+    
+    // MARK: - table view delegate
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        NSLog("Number format: \(indexPath.item)")
+        tableView.cellForRowAtIndexPath(indexPath)?.accessoryType = UITableViewCellAccessoryType.Checkmark
+    }
+    
+    func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.cellForRowAtIndexPath(indexPath)?.accessoryType = UITableViewCellAccessoryType.None
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,66 +47,38 @@ class SettingsViewController: UIViewController {
         var defaults = NSUserDefaults.standardUserDefaults()
         
         darkModeSwitch.on = defaults.boolForKey(darkModeEnabledKey)
-        
-        decimalSeparator = defaults.stringForKey(decimalSeparatorKey)
-        groupingSeparator = defaults.stringForKey(groupingSeparatorKey)
-        
-        if decimalSeparator == nil {
-            decimalSeparator = DecimalSeparators.Period.toRaw()
-        }
-        
-        if groupingSeparator == nil {
-            groupingSeparator = GroupingSeparators.Comma.toRaw()
-        }
-        
-        decimalSeparatorControl.selectedSegmentIndex = decimalSeparatorIndices[decimalSeparator]!
-        groupingSeparatorControl.selectedSegmentIndex = groupingSeparatorIndices[groupingSeparator]!
-    }
-
-    @IBAction func decimalSeparatorChanged(sender: AnyObject) {
-        let senderControl = sender as UISegmentedControl
-        let newDecimalSeparator = senderControl.titleForSegmentAtIndex(senderControl.selectedSegmentIndex)
-        
-        // Make sure our decimal and grouping separators are not the same
-        if(newDecimalSeparator == groupingSeparator) {
-            let alertView = UIAlertView(title: "Woah, there!", message: "Grouping and decimal separators can't be the same.", delegate: nil, cancelButtonTitle: "OK")
-            alertView.show()
-            
-            // Revert back to old selection
-            senderControl.selectedSegmentIndex = decimalSeparatorIndices[decimalSeparator]!
-        } else {
-            decimalSeparator = newDecimalSeparator
-        }
-    }
-    
-    @IBAction func groupingSeparatorChanged(sender: AnyObject) {
-        let senderControl = sender as UISegmentedControl
-        let newGroupingSeparator = senderControl.titleForSegmentAtIndex(senderControl.selectedSegmentIndex)
-        
-        // Make sure our decimal and grouping separators are not the same
-        if(newGroupingSeparator == decimalSeparator) {
-            let alertView = UIAlertView(title: "Woah, there!", message: "Grouping and decimal separators can't be the same.", delegate: nil, cancelButtonTitle: "OK")
-            alertView.show()
-            
-            // Revert back to old selection
-            senderControl.selectedSegmentIndex = groupingSeparatorIndices[groupingSeparator]!
-        } else {
-            groupingSeparator = newGroupingSeparator
-        }
+                
+        self.numberFormatTable.registerClass(UITableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
+        self.numberFormatTable.delegate = self
+        self.numberFormatTable.dataSource = self
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    func selectNumberFormat(index: Int) {
+        let indexPath = NSIndexPath(forRow: index, inSection: 0)
+        self.numberFormatTable.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: UITableViewScrollPosition.None)
+        self.tableView(self.numberFormatTable, didSelectRowAtIndexPath: indexPath)
+    }
 
     // MARK: - Navigation
-
+    override func viewWillAppear(animated: Bool) {
+        var defaults = NSUserDefaults.standardUserDefaults()
+        selectNumberFormat(defaults.integerForKey(numberFormatKey))
+    }
+    
     override func viewWillDisappear(animated: Bool) {
         var defaults = NSUserDefaults.standardUserDefaults()
         defaults.setBool(darkModeSwitch.on, forKey: darkModeEnabledKey)
-        defaults.setObject(decimalSeparator, forKey: decimalSeparatorKey)
-        defaults.setObject(groupingSeparator, forKey: groupingSeparatorKey)
+        
+        if let indexPath = self.numberFormatTable.indexPathForSelectedRow() {
+            NSLog("Setting number key to \(indexPath.item)")
+            defaults.setInteger(indexPath.item, forKey: numberFormatKey)
+        }
+        
         defaults.synchronize()
     }
     

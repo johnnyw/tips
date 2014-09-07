@@ -14,6 +14,7 @@
 		C802013B199F05B0007527BB /* tipsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C802013A199F05B0007527BB /* tipsTests.swift */; };
 		C8020145199FF29F007527BB /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8020144199FF29F007527BB /* SettingsViewController.swift */; };
 		C81152DB19A24018002BAEC5 /* ChangeCurrencyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81152DA19A24018002BAEC5 /* ChangeCurrencyViewController.swift */; };
+		C81A5A4C19BD0033008D7209 /* DarkPlaceholderBackgroundTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81A5A4B19BD0033008D7209 /* DarkPlaceholderBackgroundTextField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +39,7 @@
 		C802013A199F05B0007527BB /* tipsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tipsTests.swift; sourceTree = "<group>"; };
 		C8020144199FF29F007527BB /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		C81152DA19A24018002BAEC5 /* ChangeCurrencyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeCurrencyViewController.swift; sourceTree = "<group>"; };
+		C81A5A4B19BD0033008D7209 /* DarkPlaceholderBackgroundTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DarkPlaceholderBackgroundTextField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +84,7 @@
 				C8020127199F05B0007527BB /* AppDelegate.swift */,
 				C8020129199F05B0007527BB /* ViewController.swift */,
 				C802012B199F05B0007527BB /* Main.storyboard */,
+				C81A5A4B19BD0033008D7209 /* DarkPlaceholderBackgroundTextField.swift */,
 				C802012E199F05B0007527BB /* Images.xcassets */,
 				C8020125199F05B0007527BB /* Supporting Files */,
 				C8020144199FF29F007527BB /* SettingsViewController.swift */,
@@ -216,6 +219,7 @@
 			files = (
 				C802012A199F05B0007527BB /* ViewController.swift in Sources */,
 				C81152DB19A24018002BAEC5 /* ChangeCurrencyViewController.swift in Sources */,
+				C81A5A4C19BD0033008D7209 /* DarkPlaceholderBackgroundTextField.swift in Sources */,
 				C8020128199F05B0007527BB /* AppDelegate.swift in Sources */,
 				C8020145199FF29F007527BB /* SettingsViewController.swift in Sources */,
 			);

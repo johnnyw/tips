@@ -16,7 +16,7 @@ class ChangeCurrencyViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "CurrencyCell")
+        // self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "CurrencyCell")
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -32,33 +32,33 @@ class ChangeCurrencyViewController: UITableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView!) -> Int {
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
         return 1
     }
 
-    override func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
         return currencies.count
     }
     
-    override func tableView(tableView: UITableView!, didSelectRowAtIndexPath indexPath: NSIndexPath!) {
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         println("tableView:didSelectRowAtIndexPath:")
         var defaults = NSUserDefaults.standardUserDefaults()
         defaults.setObject(currencies[indexPath.item], forKey: "currency")
         defaults.synchronize()
     }
     
-    override func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCellWithIdentifier("CurrencyCell", forIndexPath: indexPath) as UITableViewCell
 //        if !cell {
 //            cell = UITableViewCell(style: .Default, reuseIdentifier: "CurrencyCell")
 //        }
 
         // Configure the cell...
-        cell.textLabel.text = currencies[indexPath.item]
+        cell.textLabel?.text = currencies[indexPath.item]
 
         return cell
     }
